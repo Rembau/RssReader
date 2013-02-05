@@ -3,6 +3,7 @@ package xml;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -11,6 +12,7 @@ import org.dom4j.io.SAXReader;
 import exception.VersionNonsupperException;
 
 public class XMLHandle {
+	Logger  log = Logger.getLogger(XMLHandle.class.getName());
     private XMLChannel channel;
     private String version;
     
@@ -22,12 +24,16 @@ public class XMLHandle {
 		return channel;
 	}
 	public void generateChannel(String url) throws MalformedURLException, DocumentException, VersionNonsupperException {
+		log.info("=");
 		Document doc = read(url);
+		log.info("==");
 		Element root = doc.getRootElement();
 		setVersion(root.attributeValue("version"));
 		if(getVersion().equals("2.0")){
-			System.out.println("good");
-			channel.init(root.element("channel"));
+			Element channelElement = (Element) root.elementIterator().next();
+			System.out.println(channelElement);
+			channel = new XMLChannel();
+			channel.init(channelElement);
 		} else {
 			throw new VersionNonsupperException();
 		}
