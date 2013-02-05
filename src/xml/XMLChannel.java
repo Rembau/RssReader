@@ -55,9 +55,19 @@ public class XMLChannel {
     	Iterator<?> channelSon= cha.elementIterator();
     	while (channelSon.hasNext()) {
     		Element son = (Element) channelSon.next();
-    		if(!son.getName().equals("item")){
-    			arrs.put(son.getNamespace().getURI()+":"+son.getName(), son.getText());
+    		if(son.getName().equals("item")){
+    			
  //    			System.out.println(son.getName()+"="+son.getText());
+    		} else if(son.getName().equals("category")){
+    			
+    		} else if(son.getName().equals("cloud")){
+    			
+    		} else if(son.getName().equals("image")){
+    			
+    		} else if(son.getName().equals("textInput")){
+    			
+    		} else {
+    			arrs.put(son.getNamespace().getURI()+":"+son.getName(), son.getText());
     		}
 		}
     }
